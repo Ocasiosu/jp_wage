@@ -1,5 +1,3 @@
-#from this import d
-#from turtle import width
 import pandas as pd
 import streamlit as st
 import pydeck as pdk
