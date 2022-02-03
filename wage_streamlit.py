@@ -3,7 +3,7 @@ import streamlit as st
 import pydeck as pdk
 import plotly.express as px
 
-st.title('日本の賃金データ（2010-2019）をさまざまなグラフで可視化')
+st.title('RESAS（地域経済分析システム）から入手した日本の賃金オープンデータをさまざまなグラフで可視化')
 
 df_jp_ind = pd.read_csv('./雇用_医療福祉_一人当たり賃金_全国_全産業.csv',encoding='shift_jis')
 df_jp_category = pd.read_csv('./雇用_医療福祉_一人当たり賃金_全国_大分類.csv',encoding='shift_jis')
@@ -11,7 +11,8 @@ df_pref_ind = pd.read_csv('./雇用_医療福祉_一人当たり賃金_都道府
 
 st.header('■2019年：1人あたり平均賃金のヒートマップ')
 """
-2019年において、マップ上で赤く光っている場所ほど、平均賃金が高い
+2019年において、マップ上で赤く光っている場所ほど、平均賃金が高い  
+東京・大阪などの大都市圏の周辺地域で賃金が高いことがわかる
 """
 
 jp_lat_lon = pd.read_csv('./pref_lat_lon.csv')
@@ -55,9 +56,11 @@ st.header('■集計年別の一人当たり賃金（万円）の推移')
 df_ts_mean = df_jp_ind[(df_jp_ind["年齢"]=="年齢計")]
 df_ts_mean = df_ts_mean.rename(columns={'一人当たり賃金（万円）':'全国_一人当たり賃金（万円）'})
 """
-全国_一人当たり賃金（万円）は2010年から2019年にかけて上昇傾向にある
+全国_一人当たり賃金（万円）は2010年から2019年にかけて上昇傾向にある  
+「年齢計」とは、全年齢で平均をとった値
 """
-df_ts_mean #集計年別の全国_一人当たり賃金
+df_ts_show = df_ts_mean.set_index('集計年')
+df_ts_show #集計年別の全国_一人当たり賃金
 
 df_pref_mean = df_pref_ind[(df_pref_ind["年齢"]=="年齢計")]
 
