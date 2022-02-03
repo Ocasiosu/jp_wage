@@ -54,12 +54,17 @@ st.header('■集計年別の一人当たり賃金（万円）の推移')
 
 df_ts_mean = df_jp_ind[(df_jp_ind["年齢"]=="年齢計")]
 df_ts_mean = df_ts_mean.rename(columns={'一人当たり賃金（万円）':'全国_一人当たり賃金（万円）'})
+"""
+全国_一人当たり賃金（万円）は2010年から2019年にかけて上昇傾向にある
+"""
 df_ts_mean #集計年別の全国_一人当たり賃金
+
 df_pref_mean = df_pref_ind[(df_pref_ind["年齢"]=="年齢計")]
 
+st.header('■都道府県別の一人当たり賃金（万円）の推移ラインチャート')
 pref_list = df_pref_mean['都道府県名'].unique()
 option_pref = st.selectbox( #セレクトボックス
-    '都道府県を選択して、全国平均賃金との差を確認する',
+    '都道府県を選択して、全国平均賃金との差を確認できる',
     (pref_list))
 df_pref_mean = df_pref_mean[df_pref_mean['都道府県名']==option_pref]
 
@@ -69,7 +74,7 @@ df_mean_line = df_mean_line.set_index('集計年')
 st.line_chart(df_mean_line)#ラインチャート描画
 
 
-st.header('■年齢階級別の全国一人当たり平均賃金（万円）')
+st.header('■年齢階級別の全国一人当たり平均賃金（万円）バブルチャート')
 df_mean_bubble = df_jp_ind[df_jp_ind['年齢'] != '年齢計']
 #X軸に一人あたり賃金
 #Y軸は年間賞与
@@ -86,7 +91,6 @@ fig = px.scatter(df_mean_bubble, #バブルチャートを
                 animation_frame="集計年",
                 animation_group="年齢"
 )
-st.plotly_chart(fig)#バブルチャートをstreamlitで呼び出す
 """
 一人あたり賃金が高くなるにつれて、年間賞与も高くなる傾向にある  
 年齢が19歳未満の世代と60歳以上の世代はグラフの左下で賃金も年間賞与も低い  
@@ -95,9 +99,11 @@ st.plotly_chart(fig)#バブルチャートをstreamlitで呼び出す
 2010から2019の9年間で多くの世代で多少、賃金が増えているが大きな変化は見られない  
 バブルサイズも9年間でほとんど変化していないため、所定内給与額はほとんど変化していない  
 """
+st.plotly_chart(fig)#バブルチャートをstreamlitで呼び出す
 
 
-st.header('■産業別の賃金推移')
+
+st.header('■産業別の賃金推移横棒グラフ')
 
 year_list = df_jp_category["集計年"].unique()#集計年をリスト化
 option_year = st.selectbox(
