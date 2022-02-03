@@ -1,5 +1,5 @@
-from this import d
-from turtle import width
+#from this import d
+#from turtle import width
 import pandas as pd
 import streamlit as st
 import pydeck as pdk
@@ -12,6 +12,9 @@ df_jp_category = pd.read_csv('./雇用_医療福祉_一人当たり賃金_全国
 df_pref_ind = pd.read_csv('./雇用_医療福祉_一人当たり賃金_都道府県_全産業.csv',encoding='shift_jis')
 
 st.header('■2019年：1人あたり平均賃金のヒートマップ')
+"""
+2019年において、マップ上で赤く光っている場所ほど、平均賃金が高い
+"""
 
 jp_lat_lon = pd.read_csv('./pref_lat_lon.csv')
 jp_lat_lon = jp_lat_lon.rename(columns={'pref_name':'都道府県名'})
